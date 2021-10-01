@@ -1,0 +1,11 @@
+"0","#Import Data Here"
+"0",""
+"0","RIM_Edited <- read_excel(""C:/Users/emily/Documents/Easy R data acess/Race_in_the_Media_edited.xlsx"")"
+"2","New names:
+* Q24 -> Q24...6
+* Q45 -> Q45...15
+* Q46_1 -> Q46_1...16
+* Q46_2 -> Q46_2...17
+* Q45 -> Q45...25
+* ...
+"

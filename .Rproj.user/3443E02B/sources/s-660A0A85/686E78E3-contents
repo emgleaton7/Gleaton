@@ -23,9 +23,9 @@ twitter: ''
 email: test@example.org
 phone: 888 888 88 88
 address:
-  street: Buzz Buzz Drive
-  city: Atlanta
-  region: GA
+  street: 450 Serra Mall
+  city: Stanford
+  region: CA
   postcode: '94305'
   country: United States
   country_code: US

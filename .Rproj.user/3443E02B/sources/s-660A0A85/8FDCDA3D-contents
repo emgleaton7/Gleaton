@@ -1,0 +1,473 @@
+---
+title: "Race in the Media"
+author: "Emily Gleaton"
+date: "5/4/2021"
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+#Load Packages 
+require(plyr)
+require(dplyr)
+require(ggpubr)
+require(reshape2)
+require(readxl)
+```
+
+
+
+```{r}
+#Import Data Here
+
+RIM_Edited <- read_excel("C:/Users/emily/Documents/Easy R data acess/Race_in_the_Media_edited.xlsx")
+
+
+
+```
+
+
+```{r}
+#Convert Likert scales to numeric data 
+
+#Black Likert Scale  
+
+#Black q1 Drug 1 
+RIM_Edited$BD.1.Q24...6.Likert1 <- as.numeric(mapvalues(RIM_Edited$Q24...6, from = c("Definitely yes", "Probably yes", "Maybe", "Probably not","Definitely not"), to = c(1,2,3,4,5)))
+
+#Black q2 Good 1 
+RIM_Edited$BG.1.Q39.Likert2 <- as.numeric(mapvalues(RIM_Edited$Q39, from = c("Definitely yes", "Probably yes", "Maybe", "Probably not","Definitely not"), to = c(1,2,3,4,5)))
+
+#Black q3 Drug 2
+RIM_Edited$BD.2.Q42.Likert3 <- as.numeric(mapvalues(RIM_Edited$Q42, from = c("Definitely yes", "Probably yes", "Maybe", "Probably not","Definitely not"), to = c(1,2,3,4,5)))
+
+#black q4 homicide 1
+RIM_Edited$BH.1.Q56.Likert4 <- as.numeric(mapvalues(RIM_Edited$Q56, from = c("Definitely yes", "Probably yes", "Maybe", "Probably not","Definitely not"), to = c(1,2,3,4,5)))
+
+#Black q5 Homicide 2
+RIM_Edited$BH.2.Q70.Likert5 <- as.numeric(mapvalues(RIM_Edited$Q70, from = c("Definitely yes", "Probably yes", "Maybe", "Probably not","Definitely not"), to = c(1,2,3,4,5)))
+
+#Black q6 homicide 3
+RIM_Edited$BH.3.Q84.Likert6 <- as.numeric(mapvalues(RIM_Edited$Q84, from = c("Definitely yes", "Probably yes", "Maybe", "Probably not","Definitely not"), to = c(1,2,3,4,5)))
+
+#white likert scale
+
+#White q1 drug 1
+RIM_Edited$Q45.15.WD.1.Likert7 <- as.numeric(mapvalues(RIM_Edited$Q45...15, from = c("Definitely yes", "Probably yes", "Maybe", "Probably not","Definitely not"), to = c(1,2,3,4,5)))
+
+#white q2 homicide 1
+RIM_Edited$Q48.WH.1.Likert8 <- as.numeric(mapvalues(RIM_Edited$Q48, from = c("Definitely yes", "Probably yes", "Maybe", "Probably not","Definitely not"), to = c(1,2,3,4,5)))
+
+#white q3 homicide 2
+RIM_Edited$Q45.25.WH.2.Likert9 <- as.numeric(mapvalues(RIM_Edited$Q45...25, from = c("Definitely yes", "Probably yes", "Maybe", "Probably not","Definitely not"), to = c(1,2,3,4,5)))
+
+#White q4 good 1
+RIM_Edited$Q49.WG.1.Likert10 <- as.numeric(mapvalues(RIM_Edited$Q49, from = c("Definitely yes", "Probably yes", "Maybe", "Probably not","Definitely not"), to = c(1,2,3,4,5)))
+
+#white q5 drug 2
+RIM_Edited$Q61.WD.2.Likert11 <- as.numeric(mapvalues(RIM_Edited$Q61, from = c("Definitely yes", "Probably yes", "Maybe", "Probably not","Definitely not"), to = c(1,2,3,4,5)))
+
+#white q6 homicide 3
+RIM_Edited$Q67.WH.3.Likert12 <- as.numeric(mapvalues(RIM_Edited$Q67, from = c("Definitely yes", "Probably yes", "Maybe", "Probably not","Definitely not"), to = c(1,2,3,4,5)))
+
+#Neutral likert scale
+
+#Neutral q1 homicide 1
+RIM_Edited$Q51.NH.1.Likert13 <- as.numeric(mapvalues(RIM_Edited$Q51, from = c("Definitely yes", "Probably yes", "Maybe", "Probably not","Definitely not"), to = c(1,2,3,4,5)))
+
+#neutral q2 drug 1
+RIM_Edited$Q52.ND.1.Likert14 <- as.numeric(mapvalues(RIM_Edited$Q52, from = c("Definitely yes", "Probably yes", "Maybe", "Probably not","Definitely not"), to = c(1,2,3,4,5)))
+
+#neutral q3 drug 2
+RIM_Edited$Q67.ND.2.Likert15 <- as.numeric(as.numeric(mapvalues(RIM_Edited$Q67, from = c("Definitely yes", "Probably yes", "Maybe", "Probably not","Definitely not"), to = c(1,2,3,4,5))))
+
+#neutral q4 homicide 2
+RIM_Edited$Q79.NH.2.Likert16 <- as.numeric(mapvalues(RIM_Edited$Q79, from = c("Definitely yes", "Probably yes", "Maybe", "Probably not","Definitely not"), to = c(1,2,3,4,5)))
+
+#neutral q5 homicide 3
+RIM_Edited$Q81.NH.3.Likert17 <- as.numeric(mapvalues(RIM_Edited$Q67, from = c("Definitely yes", "Probably yes", "Maybe", "Probably not","Definitely not"), to = c(1,2,3,4,5)))
+
+#neutral q6 good 1
+RIM_Edited$Q87.NG.1.Likert18 <- as.numeric(mapvalues(RIM_Edited$Q87, from = c("Definitely yes", "Probably yes", "Maybe", "Probably not","Definitely not"), to = c(1,2,3,4,5)))
+```
+
+```{r}
+#preliminairy analysis
+
+#make new dataframes 
+
+#make new likert dataframe for ease of use 
+likert.data <- data.frame(RIM_Edited$BD.1.Q24...6.Likert1, RIM_Edited$BG.1.Q39.Likert2,RIM_Edited$BD.2.Q42.Likert3, RIM_Edited$BH.1.Q56.Likert4, RIM_Edited$BH.2.Q70.Likert5, RIM_Edited$BH.3.Q84.Likert6, RIM_Edited$Q45.15.WD.1.Likert7, RIM_Edited$Q48.WH.1.Likert8, RIM_Edited$Q45.25.WH.2.Likert9, RIM_Edited$Q49.WG.1.Likert10, RIM_Edited$Q61.WD.2.Likert11, RIM_Edited$Q67.WH.3.Likert12, RIM_Edited$Q51.NH.1.Likert13, RIM_Edited$Q52.ND.1.Likert14, RIM_Edited$Q67.ND.2.Likert15, RIM_Edited$Q79.NH.2.Likert16, RIM_Edited$Q81.NH.3.Likert17, RIM_Edited$Q87.NG.1.Likert18)
+
+#Subset Likert data black remove null 
+likert.data.black <- RIM_Edited[c("BD.1.Q24...6.Likert1", 
+                                  "BG.1.Q39.Likert2",
+                                  "BD.2.Q42.Likert3", 
+                                  "BH.1.Q56.Likert4", 
+                                  "BH.2.Q70.Likert5", 
+                                  "BH.3.Q84.Likert6")]
+
+likert.data.black <- likert.data.black[complete.cases(likert.data.black),]
+
+#Likert dataframe for white
+likert.data.white <- RIM_Edited[c("Q45.15.WD.1.Likert7",
+                                  "Q48.WH.1.Likert8", 
+                                  "Q45.25.WH.2.Likert9", 
+                                  "Q49.WG.1.Likert10",
+                                  "Q61.WD.2.Likert11", 
+                                  "Q67.WH.3.Likert12")]
+
+likert.data.white <- likert.data.white[complete.cases(likert.data.white),]
+
+#likert dataframe for neutral 
+likert.data.neutral <- RIM_Edited[c("Q51.NH.1.Likert13", 
+                                    "Q52.ND.1.Likert14", 
+                                    "Q67.ND.2.Likert15",
+                                    "Q79.NH.2.Likert16", 
+                                    "Q81.NH.3.Likert17",
+                                    "Q87.NG.1.Likert18")] 
+
+likert.data.neutral <- likert.data.neutral[complete.cases(likert.data.neutral),]
+```
+
+```{r}
+#Use new DF to melt data 
+df_black.melt <- melt(data = likert.data.black,
+                      measure.vars = c("BD.1.Q24...6.Likert1", 
+                                        "BG.1.Q39.Likert2",
+                                        "BD.2.Q42.Likert3", 
+                                        "BH.1.Q56.Likert4", 
+                                        "BH.2.Q70.Likert5", 
+                                        "BH.3.Q84.Likert6"),
+                      variable.name = "Question_name",
+                      value.name = "full_black_data")
+
+df_white.melt <- melt(data = likert.data.white, 
+                      measure.vars = c("Q45.15.WD.1.Likert7",
+                                  "Q48.WH.1.Likert8", 
+                                  "Q45.25.WH.2.Likert9", 
+                                  "Q49.WG.1.Likert10",
+                                  "Q61.WD.2.Likert11", 
+                                  "Q67.WH.3.Likert12"), 
+                      variable.name = "Question_Name", 
+                      value.name = "full_white_data")
+
+df_neutral.melt <- melt(data = likert.data.neutral, 
+                      measure.vars = c("Q51.NH.1.Likert13", 
+                                    "Q52.ND.1.Likert14", 
+                                    "Q67.ND.2.Likert15",
+                                    "Q79.NH.2.Likert16", 
+                                    "Q81.NH.3.Likert17",
+                                    "Q87.NG.1.Likert18"), 
+                      variable.name = "Question_Name", 
+                      value.name = "full_neutral_data")
+
+```
+
+```{r}
+#setup homicide df 
+black.hom.cols = c( "BH.1.Q56.Likert4","BH.2.Q70.Likert5","BH.3.Q84.Likert6")
+homicide.black.melt <- melt(data = likert.data.black[black.hom.cols], 
+                      measure.vars = black.hom.cols,
+                      variable.name = "Question_name",
+                      value.name = "black.homicide")
+
+white.hom.cols = c("Q48.WH.1.Likert8", "Q45.25.WH.2.Likert9","Q67.WH.3.Likert12")
+homicide.white.melt <- melt(data = likert.data.white[white.hom.cols], 
+                      measure.vars = white.hom.cols, 
+                      variable.name = "Question_Name", 
+                      value.name = "white.homicide")
+neutral.hom.cols = c("Q51.NH.1.Likert13", "Q79.NH.2.Likert16","Q81.NH.3.Likert17")
+homicide.neutral.melt <- melt(data = likert.data.neutral[neutral.hom.cols], 
+                      measure.vars = neutral.hom.cols,
+                      variable.name = "Question_Name", 
+                      value.name = "neutral.homicide")
+
+```
+
+```{r}
+#setup drug df
+black.drug.cols = c( "BD.1.Q24...6.Likert1", "BD.2.Q42.Likert3")
+drug.black.melt <- melt(data = likert.data.black[black.drug.cols], 
+                      measure.vars = black.drug.cols,
+                      variable.name = "Question_name",
+                      value.name = "black.drug")
+
+white.drug.cols = c("Q45.15.WD.1.Likert7","Q61.WD.2.Likert11")
+drug.white.melt <- melt(data = likert.data.white[white.drug.cols], 
+                      measure.vars = white.drug.cols, 
+                      variable.name = "Question_Name", 
+                      value.name = "white.drug")
+
+neutral.drug.cols = c("Q52.ND.1.Likert14","Q67.ND.2.Likert15")
+drug.neutral.melt <- melt(data = likert.data.neutral[neutral.drug.cols], 
+                      measure.vars = neutral.drug.cols,
+                      variable.name = "Question_Name", 
+                      value.name = "neutral.drug")
+
+```
+
+```{r}
+#setup good df 
+black.good.cols = c( "BG.1.Q39.Likert2")
+good.black.melt <- melt(data = likert.data.black[black.good.cols], 
+                      measure.vars = black.good.cols,
+                      variable.name = "Question_name",
+                      value.name = "black.good")
+
+white.good.cols = c("Q49.WG.1.Likert10")
+good.white.melt <- melt(data = likert.data.white[white.good.cols], 
+                      measure.vars = white.good.cols, 
+                      variable.name = "Question_Name", 
+                      value.name = "white.good")
+
+neutral.good.cols = c("Q87.NG.1.Likert18")
+good.neutral.melt <- melt(data = likert.data.neutral[neutral.good.cols], 
+                      measure.vars = neutral.good.cols,
+                      variable.name = "Question_Name", 
+                      value.name = "neutral.good")
+
+```
+```{r}
+#Make DF for all melted data
+Melted_data_all <- data.frame(df_black.melt["full_black_data"], 
+                              df_white.melt["full_white_data"], 
+                              df_neutral.melt["full_neutral_data"])
+
+melted_data_homicide <- data.frame(homicide.black.melt["black.homicide"],
+                                   homicide.white.melt["white.homicide"],
+                                   homicide.neutral.melt["neutral.homicide"])
+
+melted_data_drug <- data.frame(drug.black.melt["black.drug"], 
+                               drug.white.melt["white.drug"],
+                               drug.neutral.melt["neutral.drug"])
+
+melted_data_good <- data.frame(good.black.melt["black.good"],
+                               good.white.melt["white.good"],
+                               good.neutral.melt["neutral.good"])
+
+
+```
+
+
+
+```{r}                                
+#compare means of all black and white and neutral data 
+t.test(Melted_data_all["full_black_data"],
+       Melted_data_all["full_white_data"],
+       alternative = "two.sided",
+       var.equal = FALSE)
+
+ t.test(Melted_data_all["full_black_data"],
+       Melted_data_all["full_neutral_data"],
+       alternative = "two.sided",
+       var.equal = FALSE)
+ 
+ t.test(Melted_data_all["full_white_data"],
+       Melted_data_all["full_neutral_data"],
+       alternative = "two.sided",)
+```
+     
+```{r}
+
+#compare means of black vs white vs neutral homicide 
+t.test(melted_data_homicide["black.homicide"],
+       melted_data_homicide["white.homicide"],
+       alternative = "two.sided",)
+
+t.test(melted_data_homicide["black.homicide"],
+       melted_data_homicide["neutral.homicide"],
+       alternative = "two.sided",)
+
+t.test(melted_data_homicide["white.homicide"],
+       melted_data_homicide["neutral.homicide"],
+       alternative = "two.sided",)
+
+```
+
+
+```{r}
+#compare means of black vs white vs neutral drug
+t.test(melted_data_drug["black.drug"],
+       melted_data_drug["white.drug"],
+       alternative = "two.sided",)
+
+t.test(melted_data_drug["black.drug"],
+       melted_data_drug["neutral.drug"],
+       alternative = "two.sided",)
+
+t.test(melted_data_drug["white.drug"],
+       melted_data_drug["neutral.drug"],
+       alternative = "two.sided",)
+
+```
+```{r}
+#compare means of black vs white vs neutral good
+t.test(melted_data_good["black.good"],
+       melted_data_good["white.good"],
+       alternative = "two.sided",)
+
+t.test(melted_data_good["black.good"],
+       melted_data_good["neutral.good"],
+       alternative = "two.sided",)
+
+t.test(melted_data_good["white.good"],
+       melted_data_good["neutral.good"],
+       alternative = "two.sided",)
+```
+
+```{r}
+#Next, I will make a new dataframe consisting of only the from the neutral articles where participants "guessed" the race of the individual who committed the crime or good deed. 
+
+race.guess.data <- data.frame(RIM_Edited$Q91,
+                          RIM_Edited$Q93,
+                          RIM_Edited$Q95,
+                          RIM_Edited$Q96,
+                          RIM_Edited$Q97,
+                          RIM_Edited$Q98)
+
+
+
+```
+
+
+```{r}
+#next melt the data for their respective categories 
+#Melt homicide data
+
+guess.race.hom = c("RIM_Edited.Q91","RIM_Edited.Q96","RIM_Edited.Q97")
+melt.guess.race.hom <- melt(data = race.guess.data[guess.race.hom],
+                      measure.vars = guess.race.hom,
+                      variable.name = "Question_name",
+                      value.name = "hom_guess_data")
+
+
+#melt good scenario data 
+guess.race.good = c("RIM_Edited.Q98","RIM_Edited.Q93")
+melt.guess.race.good <- melt(data = race.guess.data[guess.race.good],
+                             measure.vars = guess.race.good,
+                             variable.name = "Question_name",
+                             value.name = "good_guess_data")
+
+#melt.guess.race.good <- melt(data = race.guess.data['guess.race.good'],
+#                             measure.vars = guess.race.good,
+#                             variable.name = "Question_name",
+#                             value.name = "good_guess_data")
+
+
+#Melt the data for drug
+#drug doesn't need to be melted bc there was only one of these
+melt.guess.race.drug <- race.guess.data[c("RIM_Edited.Q95")]
+
+```
+
+```{r}
+#drop null values for good data 
+melt.guess.race.good <- na.omit(melt.guess.race.good)
+
+#drop null values for homicide scenario data
+melt.guess.race.hom <- na.omit(melt.guess.race.hom)
+
+#drop null values for the drug scenario data
+melt.guess.race.drug <- na.omit(melt.guess.race.drug)
+```
+
+```{r}
+#make data frame for each of these 
+
+
+#guess_good_data <- data.frame(melt.guess.race.good)
+#guess_hom_data <- data.frame(melt.guess.race.hom)                             
+#guess_drug_data <- data.frame(melt.guess.race.drug)
+
+
+
+```
+
+```{r}
+#convert data to numeric
+table(melt.guess.race.good['good_guess_data'])
+table(melt.guess.race.hom['hom_guess_data'])
+table(melt.guess.race.drug)
+
+```
+
+```{r}
+#compare results of race guess questions (up to 2 decimal points)
+#total good responses = 524 = 7 + 318 + 199
+#total homicide responses = 786 = 79 + 474 + 233
+#total drug responses = 262 = 42 + 164 + 56
+
+#% of participants that thought a black person committed: 
+#good = 1.34%
+#homicide = 10.5%
+#drug = 16.3%
+
+#% of participants who thought that a white person committed
+#good = 37.98%
+#homicide = 29.64%
+#drug = 21.37% 
+
+#% of participants who thought that either person committed 
+#good = 60.69%
+#homicide = 60.31%
+#drug = 62.6%%
+
+```
+
+```{r}
+#make all the numbers numeric 
+
+melt.guess.race.good <- as.numeric(mapvalues(melt.guess.race.good$good_guess_data, from = c("Black", "Either", "White"), to = c(-1,0,1)))
+
+melt.guess.race.hom <- as.numeric(mapvalues(melt.guess.race.hom$hom_guess_data, from = c("Black", "Either", "White"), to = c(-1,0,2 )))
+ 
+melt.guess.race.drug <- as.numeric(mapvalues(melt.guess.race.drug$RIM_Edited.Q95, from = c("Black", "Either", "White"), to = c(-1,0,1))) 
+
+#melt.guess.race.drug <- as.numeric(mapvalues(melt.guess.race.drug$RIM_Edited.Q95, from = c("Black", "Either", "White"), to = c(1,2,3)))                                 
+```
+
+
+
+```{r}
+#compare data for drug, good and homicide to see if black, white, or either is different from each other. 
+t.test(melt.guess.race.good)
+t.test(melt.guess.race.hom)
+t.test(melt.guess.race.drug)
+
+```
+
+```{r}
+#compare data between groups 
+t.test(melt.guess.race.drug,
+       melt.guess.race.good,
+       alternative = "two.sided",)
+
+t.test(melt.guess.race.drug,
+       melt.guess.race.hom,
+       alternative = "two.sided",)
+
+t.test(melt.guess.race.hom,
+       melt.guess.race.good,
+       alternative = "two.sided",)
+
+```
+
+
+```{r}
+```
+
+
+

@@ -1,26 +1,26 @@
 {
-    "id": "CA84B290",
-    "path": "~/GitHub/Gleaton/content/home/demo.md",
-    "project_path": "content/home/demo.md",
-    "type": "markdown",
+    "id": "89FD9BA3",
+    "path": "~/GitHub/Gleaton/config/_default/params.yaml",
+    "project_path": "config/_default/params.yaml",
+    "type": "yaml",
     "hash": "0",
     "contents": "",
     "dirty": false,
-    "created": 1632836890946.0,
+    "created": 1633059082274.0,
     "source_on_save": false,
     "relative_order": 1,
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "8,51",
-        "scrollLine": "1"
+        "cursorPosition": "30,18",
+        "scrollLine": "22"
     },
     "folds": "",
-    "lastKnownWriteTime": 1632837017,
+    "lastKnownWriteTime": 1633059124,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1632837017429,
+    "last_content_update": 1633059124478,
     "read_only": false,
     "read_only_alternatives": []
 }

@@ -1,0 +1,8 @@
+"0","#drop null values for good data "
+"0","melt.guess.race.good <- na.omit(melt.guess.race.good)"
+"0",""
+"0","#drop null values for homicide scenario data"
+"0","melt.guess.race.hom <- na.omit(melt.guess.race.hom)"
+"0",""
+"0","#drop null values for the drug scenario data"
+"0","melt.guess.race.drug <- na.omit(melt.guess.race.drug)"
